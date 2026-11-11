@@ -1,0 +1,4 @@
+out/
+refs/*.jpg
+__pycache__/
+*.pyc
