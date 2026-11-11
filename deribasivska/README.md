@@ -37,11 +37,17 @@ One continuous camera move, 480 frames at 24 fps:
 - **Light**: physically based sky, low sun almost on the street axis. This is geographically
   motivated: the street runs roughly ESE, which is where the sun rises over the bay in mid-November.
 
+## Result
+
+`final/deribasivska_autumn.mp4` — 1920x1080, 24 fps, 20 s, H.264 + AAC. Stills and the
+reference-photo comparison sheets are in the same folder.
+
 ## Pipeline
 
 ```
 python build.py                      # build the scene -> out/scene.blend   (~6 s)
-./run_render.sh                      # Cycles, 1280x720 linear EXR + depth  (hours on CPU)
+./run_render.sh                      # Cycles, 1280x720 linear EXR + depth  (~3 h on 4 CPU cores)
+./run_patch.sh                       # re-render of frames 118-236 with the corrected yellow facade
 python music.py out/music.wav        # synthesise the score                 (~10 s)
 python make_video.py out/exr out/deribasivska_autumn.mp4 --music out/music.wav
 ```
