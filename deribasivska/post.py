@@ -9,6 +9,7 @@ from dz import cam
 from dz.world_const import SUN_DIR
 
 FLOAT = Imath.PixelType(Imath.PixelType.FLOAT)
+PATCH = (118, 236)
 
 
 def read_exr(path, chans):
@@ -21,6 +22,11 @@ def read_exr(path, chans):
 
 def load(dirn, fr):
     rgb = read_exr(os.path.join(dirn, 'f%04d.exr' % fr), 'RGB')
+    # patch pass: re-rendered frames (yellow hero facade) cross-faded in over the main render
+    pp = os.path.join(dirn + '_hero', 'f%04d.exr' % fr)
+    if os.path.exists(pp):
+        w = float(np.clip(min(fr - PATCH[0], PATCH[1] - fr) / 10.0, 0, 1))
+        if w > 0: rgb = rgb * (1 - w) + read_exr(pp, 'RGB') * w
     d = read_exr(os.path.join(dirn, 'd%04d.exr' % fr), 'V')[..., 0]
     return np.nan_to_num(rgb, posinf=50.0, neginf=0.0).clip(0, 200), d
 

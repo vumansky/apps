@@ -40,7 +40,7 @@ def street_rows(get_mat, coll, rng):
                     hero = (side == 1 and abs(y - 34.0) < 0.5)
                     if hero:   # Bolshaya Moskovskaya-like: butter yellow, white ornament, zinc mansard
                         st = facade.make_style(rng, floors=4, body='butter')
-                        st.update(trim='trim:white', roof='roof:zinc', mansard=True, balcony='alt', bal2=True, order='pilasters',
+                        st.update(body='stucco:hero', rustic='rustic:hero', trim='trim:white', roof='roof:zinc', mansard=True, balcony='alt', bal2=True, order='pilasters',
                                   pil_step=1, parapet='none', attic='attic', hoods=['seg', 'tri', 'flat'], arch_floor=3, modillions=True)
                     elif rng.random() < 0.3:
                         st['mansard'] = True; st['parapet'] = 'none'
