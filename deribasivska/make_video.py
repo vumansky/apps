@@ -98,7 +98,7 @@ def finish(y, t, titles, fr):
         z = z * (1 - al[..., None]) + np.array([1.0, 0.965, 0.90], np.float32) * al[..., None]
     g = np.random.default_rng(fr).normal(size=(H, W, 1)).astype(np.float32)
     l = post.lum(z)[..., None]
-    z = z + g * 0.016 * (0.35 + (1 - l))                                    # film grain, stronger in the shadows
+    z = z + g * 0.010 * (0.35 + (1 - l))                                    # film grain, stronger in the shadows
     fade = float(smooth(0.0, 0.55, t)) * (1 - float(smooth(19.35, 20.0, t)))
     z = z * fade
     # ordered-ish dither to 8 bit
@@ -120,7 +120,7 @@ def main():
         i = a.index('--stills'); stills = {int(v): None for v in a[i + 1].split(',')}; still_dir = a[i + 2]; os.makedirs(still_dir, exist_ok=True)
     cmd = ['ffmpeg', '-y', '-v', 'error', '-f', 'rawvideo', '-pix_fmt', 'rgb24', '-s', '%dx%d' % (W, H), '-r', str(cam.FPS), '-i', '-']
     if music: cmd += ['-i', music]
-    cmd += ['-c:v', 'libx264', '-preset', 'slow', '-crf', '15', '-pix_fmt', 'yuv420p', '-profile:v', 'high',
+    cmd += ['-c:v', 'libx264', '-preset', 'slow', '-crf', '19', '-pix_fmt', 'yuv420p', '-profile:v', 'high',
             '-color_primaries', 'bt709', '-color_trc', 'bt709', '-colorspace', 'bt709', '-movflags', '+faststart']
     if music: cmd += ['-c:a', 'aac', '-b:a', '256k', '-shortest']
     cmd += [outp]
